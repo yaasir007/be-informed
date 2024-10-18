@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import Footer from './footer/index.vue'
-import { SearchIcon, StarIcon, PenIcon, FacebookIcon, TwitterIcon, LinkedinIcon, MenuIcon, XIcon } from 'lucide-vue-next'
+import { SearchIcon, StarIcon, PenIcon, BriefcaseIcon, TrendingUpIcon, ShieldIcon, ChevronDownIcon, MenuIcon, XIcon } from 'lucide-vue-next'
 
 const mobileMenuOpen = ref(false)
 
@@ -42,6 +42,35 @@ const testimonials = [
     quote: 'As an HR professional, I find the insights from this platform invaluable for improving our workplace.'
   }
 ]
+
+const features = [
+  { icon: BriefcaseIcon, title: 'Company Profiles', description: 'Detailed information on thousands of companies across various industries.' },
+  { icon: StarIcon, title: 'Ratings & Reviews', description: 'Honest feedback from current and former employees on company culture, work-life balance, and more.' },
+  { icon: TrendingUpIcon, title: 'Salary Insights', description: 'Up-to-date salary information to help you negotiate better compensation packages.' },
+  { icon: ShieldIcon, title: 'Anonymous Reviews', description: 'Share your experiences without fear, thanks to our robust anonymity protections.' }
+]
+
+const faqItems = ref([
+  {
+    question: 'How do you ensure the authenticity of reviews?',
+    answer: 'We use a combination of advanced algorithms and human moderation to verify the authenticity of all reviews. We also have strict policies against fake reviews and take immediate action when violations are detected.',
+    isOpen: false
+  },
+  {
+    question: 'Can companies respond to reviews?',
+    answer: 'Yes, verified company representatives can respond to reviews. This allows for a balanced perspective and gives companies the opportunity to address feedback constructively.',
+    isOpen: false
+  },
+  {
+    question: 'How often is salary data updated?',
+    answer: 'Our salary data is updated in real-time as new information is submitted by users. We also conduct regular audits to ensure the accuracy and relevance of our salary insights.',
+    isOpen: false
+  }
+])
+
+const toggleFAQ = (index: number) => {
+  faqItems.value[index].isOpen = !faqItems.value[index].isOpen
+}
 
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value
@@ -159,8 +188,28 @@ const toggleMobileMenu = () => {
       </div>
     </div>
 
-    <!-- Testimonials Section -->
+    <!-- Features Section -->
     <div class="py-16 bg-gray-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-12">
+          Why Choose BeInformed
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div v-for="feature in features" :key="feature.title" class="flex items-start">
+            <div class="flex-shrink-0">
+              <component :is="feature.icon" class="h-6 w-6 text-indigo-600" />
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-medium text-gray-900">{{ feature.title }}</h3>
+              <p class="mt-2 text-base text-gray-500">{{ feature.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div class="py-16 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-12">
           What Our Users Say
@@ -177,6 +226,47 @@ const toggleMobileMenu = () => {
             <p class="text-gray-700">{{ testimonial.quote }}</p>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="py-16 bg-gray-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-12">
+          Frequently Asked Questions
+        </h2>
+        <div class="space-y-8">
+          <div v-for="(item, index) in faqItems" :key="index" class="bg-white shadow overflow-hidden sm:rounded-lg">
+            <button @click="toggleFAQ(index)" class="px-4 py-5 sm:px-6 w-full text-left focus:outline-none">
+              <h3 class="text-lg leading-6 font-medium text-gray-900 flex justify-between items-center">
+                {{ item.question }}
+                <ChevronDownIcon :class="{ 'transform rotate-180': item.isOpen }" class="h-5 w-5  text-gray-500" />
+              </h3>
+            </button>
+            <div v-show="item.isOpen" class="px-4 py-5 sm:px-6 border-t border-gray-200">
+              <p class="text-base text-gray-500">{{ item.answer }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="bg-indigo-700">
+      <div class="max-w-2xl mx-auto text-center py-16 px-4 sm:py-20 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+          <span class="block">Ready to make informed career decisions?</span>
+          <span class="block">Start exploring company reviews today.</span>
+        </h2>
+        <p class="mt-4 text-lg leading-6 text-indigo-200">
+          Join thousands of professionals who are making smarter career choices with BeInformed.
+        </p>
+        <a
+          href="#"
+          class="mt-8 w-full inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 sm:w-auto"
+        >
+          Sign Up for Free
+        </a>
       </div>
     </div>
 
