@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { EyeIcon, EyeOffIcon, FacebookIcon, TwitterIcon, GithubIcon, MenuIcon, XIcon } from 'lucide-vue-next'
+import { EyeIcon, EyeOffIcon, MenuIcon, XIcon } from 'lucide-vue-next'
 
 const email = ref('')
 const password = ref('')
