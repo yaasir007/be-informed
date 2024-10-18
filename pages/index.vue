@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import Footer from './footer/index.vue'
 import { SearchIcon, StarIcon, PenIcon, FacebookIcon, TwitterIcon, LinkedinIcon, MenuIcon, XIcon } from 'lucide-vue-next'
 
-const email = ref('')
 const mobileMenuOpen = ref(false)
 
 const testimonials = [
@@ -26,19 +26,25 @@ const testimonials = [
     position: 'HR Specialist',
     avatar: XIcon,
     quote: 'As an HR professional, I find the insights from this platform invaluable for improving our workplace.'
+  },
+  {
+    id: 4,
+    name: 'Bob Smith',
+    position: 'Marketing Manager',
+    avatar: XIcon,
+    quote: 'I love how easy it is to share my experiences and help others make informed career decisions.'
+  },
+  {
+    id: 5,
+    name: 'Carol Williams',
+    position: 'HR Specialist',
+    avatar: XIcon,
+    quote: 'As an HR professional, I find the insights from this platform invaluable for improving our workplace.'
   }
 ]
 
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value
-}
-
-const subscribeNewsletter = () => {
-  // Here you would typically send the email to your backend
-  console.log('Subscribing email:', email.value)
-  // Reset form
-  email.value = ''
-  // You might want to show a success message to the user here
 }
 </script>
 
@@ -57,7 +63,7 @@ const subscribeNewsletter = () => {
             <NuxtLink to="./" class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Home</NuxtLink>
             <NuxtLink to="./companies" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Companies</NuxtLink>
             <NuxtLink to="./reviews" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Reviews</NuxtLink>
-            <NuxtLink to="./" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">About</NuxtLink>
+            <NuxtLink to="./about" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">About</NuxtLink>
           </div>
           <div class="hidden sm:ml-6 sm:flex sm:items-center">
             <NuxtLink to="../auth/login" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -104,14 +110,14 @@ const subscribeNewsletter = () => {
           </p>
           <div class="mt-8 sm:flex sm:justify-center lg:justify-start">
             <div class="rounded-md shadow">
-              <a href="#" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 md:py-4 md:text-lg md:px-10">
+              <NuxtLink to="./auth/login" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 md:py-4 md:text-lg md:px-10">
                 Get Started
-              </a>
+              </NuxtLink>
             </div>
             <div class="mt-3 sm:mt-0 sm:ml-3">
-              <a href="#" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 md:py-4 md:text-lg md:px-10">
+              <NuxtLink to="./reviews" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 md:py-4 md:text-lg md:px-10">
                 Read Reviews
-              </a>
+              </NuxtLink>
             </div>
           </div>
         </div>
@@ -122,7 +128,7 @@ const subscribeNewsletter = () => {
     </header>
 
     <!-- How It Works Section -->
-    <section class="py-16 bg-white">
+    <div class="py-16 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-12">
           How It Works
@@ -151,10 +157,10 @@ const subscribeNewsletter = () => {
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
     <!-- Testimonials Section -->
-    <section class="py-16 bg-gray-100">
+    <div class="py-16 bg-gray-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-12">
           What Our Users Say
@@ -172,60 +178,10 @@ const subscribeNewsletter = () => {
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white">
-      <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <h3 class="text-lg font-semibold mb-4">Company Review</h3>
-            <p class="text-gray-400">Helping job seekers make informed decisions.</p>
-          </div>
-          <div>
-            <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-            <ul class="space-y-2">
-              <li><a href="#" class="text-gray-400 hover:text-white">Home</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
-            <div class="flex space-x-4">
-              <a href="#" class="text-gray-400 hover:text-white">
-                <FacebookIcon class="w-6 h-6" />
-              </a>
-              <a href="#" class="text-gray-400 hover:text-white">
-                <TwitterIcon class="w-6 h-6" />
-              </a>
-              <a href="#" class="text-gray-400 hover:text-white">
-                <LinkedinIcon class="w-6 h-6" />
-              </a>
-            </div>
-          </div>
-          <div>
-            <h4 class="text-lg font-semibold mb-4">Subscribe</h4>
-            <form @submit.prevent="subscribeNewsletter" class="flex">
-              <input
-                type="email"
-                v-model="email"
-                placeholder="Enter your email"
-                class="flex-grow px-4 py-2 rounded-l-md text-gray-900"
-                required
-              >
-              <button type="submit" class="bg-indigo-600 px-4 py-2 rounded-r-md hover:bg-indigo-700">
-                Subscribe
-              </button>
-            </form>
-          </div>
-        </div>
-        <div class="mt-8 pt-8 border-t border-gray-700 text-center">
-          <p class="text-gray-400">&copy; 2023 Company Review. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
+    <Footer />
   </div>
 </template>
 
