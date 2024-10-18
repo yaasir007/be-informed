@@ -38,11 +38,11 @@ const companyValues = ref([
   },
 ]);
 
-const highlightValue = (index) => {
+const highlightValue = (index: number) => {
   companyValues.value[index].highlighted = true;
 };
 
-const unhighlightValue = (index) => {
+const unhighlightValue = (index: number) => {
   companyValues.value[index].highlighted = false;
 };
 
