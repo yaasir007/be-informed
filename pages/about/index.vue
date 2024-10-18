@@ -1,52 +1,109 @@
+<script setup lang="ts">
+import { ref, onMounted } from "vue";
+import Navigation from '../navigation/index.vue'
+
+const howItWorks = [
+  "Create an account or log in to your existing profile.",
+  "Search for a company or browse our extensive database.",
+  "Read reviews from current and former employees.",
+  "Share your own experience by writing a review.",
+  "Rate companies based on various factors like work-life balance, culture, and career growth.",
+  "Engage with the community by voting on helpful reviews.",
+];
+
+const companyValues = ref([
+  {
+    title: "Transparency",
+    description:
+      "We believe in open and honest communication, both on our platform and within our organization.",
+    highlighted: false,
+  },
+  {
+    title: "Empowerment",
+    description:
+      "We aim to give individuals the tools and information they need to make informed career decisions.",
+    highlighted: false,
+  },
+  {
+    title: "Innovation",
+    description:
+      "We constantly strive to improve our platform and bring new ideas to the job market.",
+    highlighted: false,
+  },
+  {
+    title: "Integrity",
+    description:
+      "We maintain high ethical standards and ensure the authenticity of the reviews on our platform.",
+    highlighted: false,
+  },
+]);
+
+const highlightValue = (index) => {
+  companyValues.value[index].highlighted = true;
+};
+
+const unhighlightValue = (index) => {
+  companyValues.value[index].highlighted = false;
+};
+
+const teamMembers = [
+  {
+    name: "Yaasir Cheekoory",
+    role: "CEO & Co-founder",
+    avatar: "/placeholder.svg?height=200&width=200",
+  },
+  {
+    name: "Yaasir Cheekoory",
+    role: "CTO",
+    avatar: "/placeholder.svg?height=200&width=200",
+  },
+  {
+    name: "Yaasir Cheekoory",
+    role: "Head of User Experience",
+    avatar: "/placeholder.svg?height=200&width=200",
+  },
+];
+
+const privacyCommitments = [
+  "All reviews are posted anonymously by default.",
+  "We use advanced encryption to protect your data.",
+  "We never share personal information with the companies being reviewed.",
+  "Users have full control over their account information and can delete their data at any time.",
+];
+
+const contactForm = ref({
+  name: "",
+  email: "",
+  message: "",
+});
+
+const submitContactForm = () => {
+  console.log("Form submitted:", contactForm.value);
+  contactForm.value = { name: "", email: "", message: "" };
+  alert("Thank you for your message. We will get back to you soon!");
+};
+
+onMounted(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("fade-in-element");
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  document.querySelectorAll("section").forEach((section) => {
+    observer.observe(section);
+  });
+});
+</script>
+
 <template>
   <!-- Navigation -->
-  <nav class="bg-white shadow">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16">
-        <div class="flex">
-          <div class="flex-shrink-0 flex items-center">
-            <span class="ml-2 text-xl font-bold text-[#4F45E4]">BeInformed</span>
-          </div>
-        </div>
-        <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-          <NuxtLink to="./" class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Home</NuxtLink>
-          <NuxtLink to="./companies" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Companies</NuxtLink>
-          <NuxtLink to="./reviews" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Reviews</NuxtLink>
-          <NuxtLink to="./about" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">About</NuxtLink>
-        </div>
-        <div class="hidden sm:ml-6 sm:flex sm:items-center">
-          <NuxtLink to="../auth/login" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Sign In
-          </NuxtLink>
-        </div>
-        <div class="-mr-2 flex items-center sm:hidden">
-          <button @click="toggleMobileMenu" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" :aria-expanded="mobileMenuOpen">
-            <span class="sr-only">Open main menu</span>
-            <MenuIcon v-if="!mobileMenuOpen" class="block h-6 w-6" />
-            <XIcon v-else class="block h-6 w-6" />
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mobile menu, show/hide based on menu state. -->
-    <div v-show="mobileMenuOpen" class="sm:hidden" id="mobile-menu">
-      <div class="pt-2 pb-3 space-y-1">
-        <a href="#" class="bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Home</a>
-        <a href="#" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Companies</a>
-        <a href="#" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Reviews</a>
-        <a href="#" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">About</a>
-      </div>
-      <div class="pt-4 pb-3 border-t border-gray-200">
-        <div class="mt-3 space-y-1">
-          <button class="w-full text-left block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
-            Sign In
-          </button>
-        </div>
-      </div>
-    </div>
-  </nav>
-
+  <Navigation />
 
   <div class="min-h-screen">
     <main class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -258,108 +315,6 @@
     </main>
   </div>
 </template>
-
-<script setup>
-import { ref, onMounted } from "vue";
-
-const howItWorks = [
-  "Create an account or log in to your existing profile.",
-  "Search for a company or browse our extensive database.",
-  "Read reviews from current and former employees.",
-  "Share your own experience by writing a review.",
-  "Rate companies based on various factors like work-life balance, culture, and career growth.",
-  "Engage with the community by voting on helpful reviews.",
-];
-
-const companyValues = ref([
-  {
-    title: "Transparency",
-    description:
-      "We believe in open and honest communication, both on our platform and within our organization.",
-    highlighted: false,
-  },
-  {
-    title: "Empowerment",
-    description:
-      "We aim to give individuals the tools and information they need to make informed career decisions.",
-    highlighted: false,
-  },
-  {
-    title: "Innovation",
-    description:
-      "We constantly strive to improve our platform and bring new ideas to the job market.",
-    highlighted: false,
-  },
-  {
-    title: "Integrity",
-    description:
-      "We maintain high ethical standards and ensure the authenticity of the reviews on our platform.",
-    highlighted: false,
-  },
-]);
-
-const highlightValue = (index) => {
-  companyValues.value[index].highlighted = true;
-};
-
-const unhighlightValue = (index) => {
-  companyValues.value[index].highlighted = false;
-};
-
-const teamMembers = [
-  {
-    name: "Yaasir Cheekoory",
-    role: "CEO & Co-founder",
-    avatar: "/placeholder.svg?height=200&width=200",
-  },
-  {
-    name: "Yaasir Cheekoory",
-    role: "CTO",
-    avatar: "/placeholder.svg?height=200&width=200",
-  },
-  {
-    name: "Yaasir Cheekoory",
-    role: "Head of User Experience",
-    avatar: "/placeholder.svg?height=200&width=200",
-  },
-];
-
-const privacyCommitments = [
-  "All reviews are posted anonymously by default.",
-  "We use advanced encryption to protect your data.",
-  "We never share personal information with the companies being reviewed.",
-  "Users have full control over their account information and can delete their data at any time.",
-];
-
-const contactForm = ref({
-  name: "",
-  email: "",
-  message: "",
-});
-
-const submitContactForm = () => {
-  console.log("Form submitted:", contactForm.value);
-  contactForm.value = { name: "", email: "", message: "" };
-  alert("Thank you for your message. We will get back to you soon!");
-};
-
-onMounted(() => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("fade-in-element");
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
-
-  document.querySelectorAll("section").forEach((section) => {
-    observer.observe(section);
-  });
-});
-</script>
 
 <style>
 @keyframes fadeIn {
