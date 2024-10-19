@@ -106,7 +106,7 @@ const companies = ref([
 <template>
   <Navigation />
 
-  <div class="min-h-screen bg-gray-100">
+  <div class="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100">
     <main>
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="px-4 py-6 sm:px-0">

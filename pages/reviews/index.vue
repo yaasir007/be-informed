@@ -94,7 +94,7 @@ const logout = () => {
 <template>
   <Navigation />
 
-  <div class="min-h-screen bg-gray-100 py-6">
+  <div class="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100 py-6">
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="mb-3 flex flex-col sm:flex-row justify-between items-start sm:items-center">
         <NuxtLink to="../reviews/creation" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

@@ -1,60 +1,138 @@
-<template>
-  <nav class="bg-white shadow">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16">
-        <div class="flex">
-          <div class="flex-shrink-0 flex items-center">
-            <span class="ml-2 text-xl font-bold text-[#4F45E4]">BeInformed</span>
-          </div>
-        </div>
-        <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-          <a href="/" class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-            Home
-          </a>
-          <a href="/" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-            Companies
-          </a>
-          <NuxtLink to="../reviews" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Reviews</NuxtLink>
-          <a href="#" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-            About
-          </a>
-        </div>
-        <div class="hidden sm:ml-6 sm:flex sm:items-center">
-          <NuxtLink to="../auth/login" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Log out
-          </NuxtLink>
-        </div>
-        <div class="-mr-2 flex items-center sm:hidden">
-          <button @click="toggleMobileMenu" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" :aria-expanded="mobileMenuOpen">
-            <span class="sr-only">Open main menu</span>
-            <MenuIcon v-if="!mobileMenuOpen" class="block h-6 w-6" />
-            <XIcon v-else class="block h-6 w-6" />
-          </button>
-        </div>
-      </div>
-    </div>
+<script setup>
+import { ref, computed, watch } from 'vue'
+import { SendIcon, StarIcon, ChevronDownIcon, CheckIcon } from 'lucide-vue-next'
+import Navigation from '@/pages/navigation/index.vue'
 
-    <!-- Mobile menu, show/hide based on menu state. -->
-    <div v-show="mobileMenuOpen" class="sm:hidden" id="mobile-menu">
-      <div class="pt-2 pb-3 space-y-1">
-        <a href="#" class="bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Home</a>
-        <a href="#" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Companies</a>
-        <a href="#" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Reviews</a>
-        <a href="#" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">About</a>
-      </div>
-      <div class="pt-4 pb-3 border-t border-gray-200">
-        <div class="mt-3 space-y-1">
-          <button class="w-full text-left block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
-            Sign In
-          </button>
-        </div>
-      </div>
+const companies = ['TechCorp', 'FinanceInc', 'RetailGiant', 'HealthCare Co.']
+const selectedCompany = ref('')
+const newCompanyName = ref('')
+const showNewCompanyInput = ref(false)
+const isOpen = ref(false)
+const isAnonymous = ref(false)
+
+const review = ref({
+  companyName: '',
+  reviewerName: '',
+  title: '',
+  reviewText: '',
+  rating: 0,
+  pros: '',
+  cons: '',
+  date: new Date().toISOString().split('T')[0]
+})
+
+watch(isAnonymous, (newValue) => {
+  if (newValue) {
+    review.value.reviewerName = 'Anonymous'
+  } else {
+    review.value.reviewerName = ''
+  }
+})
+
+const toggleDropdown = () => {
+  isOpen.value = !isOpen.value
+}
+
+const selectCompany = (company) => {
+  selectedCompany.value = company
+  review.value.companyName = company
+  showNewCompanyInput.value = false
+  isOpen.value = false
+}
+
+const selectNewCompany = () => {
+  selectedCompany.value = ''
+  showNewCompanyInput.value = true
+  isOpen.value = false
+}
+
+const formProgress = computed(() => {
+  const requiredFields = [
+    selectedCompany.value || newCompanyName.value,
+    review.value.reviewerName,
+    review.value.reviewText,
+    review.value.rating
+  ];
+  const filledFields = requiredFields.filter(Boolean).length;
+  return Math.round((filledFields / requiredFields.length) * 100);
+})
+
+const submitReview = () => {
+  if (showNewCompanyInput.value) {
+    review.value.companyName = newCompanyName.value
+  }
+
+  if (isAnonymous.value) {
+    review.value.reviewerName = 'Anonymous'
+  }
+
+  console.log('Submitting review:', review.value)
+
+  alert('Thank you for your review!')
+
+  review.value = {
+    companyName: '',
+    reviewerName: '',
+    title: '',
+    reviewText: '',
+    rating: 0,
+    pros: '',
+    cons: '',
+    date: new Date().toISOString().split('T')[0]
+  }
+  selectedCompany.value = ''
+  newCompanyName.value = ''
+  showNewCompanyInput.value = false
+  isAnonymous.value = false
+}
+
+const StarRating = {
+  props: {
+    modelValue: {
+      type: Number,
+      default: 0
+    }
+  },
+  emits: ['update:modelValue'],
+  setup(props, { emit }) {
+    const hoverRating = ref(0)
+
+    const updateRating = (rating) => {
+      emit('update:modelValue', rating)
+    }
+
+    return { hoverRating, updateRating }
+  },
+  template: `
+    <div class="flex items-center space-x-1">
+      <template v-for="star in 5" :key="star">
+        <button
+          @click="updateRating(star)"
+          @mouseenter="hoverRating = star"
+          @mouseleave="hoverRating = 0"
+          class="focus:outline-none transition-colors duration-200"
+          :aria-label="'Rate ' + star + ' stars'"
+        >
+          <StarIcon
+            :class="[
+              star <= (hoverRating || modelValue) ? 'text-yellow-400' : 'text-gray-300',
+              'h-8 w-8'
+            ]"
+            :fill="star <= (hoverRating || modelValue) ? 'currentColor' : 'none'"
+          />
+        </button>
+      </template>
     </div>
-  </nav>
+  `
+}
+</script>
+
+<template>
+  <Navigation />
 
   <div class="min-h-screen flex flex-col bg-gray-100 relative overflow-hidden">
     <!-- Animated Background -->
-    <div class="absolute inset-0 z-0">
+    <!-- <div class="absolute inset-0 z-0">
       <div v-for="i in 10" :key="i"
         class="absolute rounded-full opacity-10 animate-float"
         :style="{
@@ -66,11 +144,11 @@
           backgroundColor: ['#4F46E5', '#818CF8', '#6366F1'][Math.floor(Math.random() * 3)]
         }"
       ></div>
-    </div>
+    </div> -->
 
     <!-- Main Content -->
-    <main class="flex-grow relative z-10">
-      <div class="max-w-2xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+    <main class="flex-grow relative z-10 bg-gradient-to-br from-indigo-50 to-blue-100">
+      <div class="max-w-3xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div class="bg-white shadow-xl rounded-lg overflow-hidden">
           <div class="px-6 py-8">
             <h2 class="text-3xl font-extrabold text-gray-900 text-center">Create a New Review</h2>
@@ -80,6 +158,27 @@
           </div>
 
           <form @submit.prevent="submitReview" class="space-y-8 px-6 pb-8">
+
+            <div class="mb-6">
+              <div class="relative pt-1">
+                <div class="flex mb-2 items-center justify-between">
+                  <div>
+                    <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-indigo-600 bg-indigo-200">
+                      Progress
+                    </span>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-xs font-semibold inline-block text-indigo-600">
+                      {{ formProgress }}%
+                    </span>
+                  </div>
+                </div>
+                <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-indigo-200">
+                  <div :style="{ width: `${formProgress}%` }" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-indigo-500 transition-all duration-300 ease-in-out"></div>
+                </div>
+              </div>
+            </div>
+
             <!-- Company Selection -->
             <div class="space-y-2">
               <label for="company-select" class="block text-sm font-medium text-gray-700">Company Name</label>
@@ -253,123 +352,6 @@
     </main>
   </div>
 </template>
-
-<script setup>
-import { ref, computed, watch } from 'vue'
-import { SendIcon, StarIcon, ChevronDownIcon, CheckIcon } from 'lucide-vue-next'
-
-const companies = ['TechCorp', 'FinanceInc', 'RetailGiant', 'HealthCare Co.']
-const selectedCompany = ref('')
-const newCompanyName = ref('')
-const showNewCompanyInput = ref(false)
-const isOpen = ref(false)
-const isAnonymous = ref(false)
-
-const review = ref({
-  companyName: '',
-  reviewerName: '',
-  title: '',
-  reviewText: '',
-  rating: 0,
-  pros: '',
-  cons: '',
-  date: new Date().toISOString().split('T')[0]
-})
-
-watch(isAnonymous, (newValue) => {
-  if (newValue) {
-    review.value.reviewerName = 'Anonymous'
-  } else {
-    review.value.reviewerName = ''
-  }
-})
-
-const toggleDropdown = () => {
-  isOpen.value = !isOpen.value
-}
-
-const selectCompany = (company) => {
-  selectedCompany.value = company
-  review.value.companyName = company
-  showNewCompanyInput.value = false
-  isOpen.value = false
-}
-
-const selectNewCompany = () => {
-  selectedCompany.value = ''
-  showNewCompanyInput.value = true
-  isOpen.value = false
-}
-
-const submitReview = () => {
-  if (showNewCompanyInput.value) {
-    review.value.companyName = newCompanyName.value
-  }
-
-  if (isAnonymous.value) {
-    review.value.reviewerName = 'Anonymous'
-  }
-
-  console.log('Submitting review:', review.value)
-
-  alert('Thank you for your review!')
-
-  review.value = {
-    companyName: '',
-    reviewerName: '',
-    title: '',
-    reviewText: '',
-    rating: 0,
-    pros: '',
-    cons: '',
-    date: new Date().toISOString().split('T')[0]
-  }
-  selectedCompany.value = ''
-  newCompanyName.value = ''
-  showNewCompanyInput.value = false
-  isAnonymous.value = false
-}
-
-const StarRating = {
-  props: {
-    modelValue: {
-      type: Number,
-      default: 0
-    }
-  },
-  emits: ['update:modelValue'],
-  setup(props, { emit }) {
-    const hoverRating = ref(0)
-
-    const updateRating = (rating) => {
-      emit('update:modelValue', rating)
-    }
-
-    return { hoverRating, updateRating }
-  },
-  template: `
-    <div class="flex items-center space-x-1">
-      <template v-for="star in 5" :key="star">
-        <button
-          @click="updateRating(star)"
-          @mouseenter="hoverRating = star"
-          @mouseleave="hoverRating = 0"
-          class="focus:outline-none transition-colors duration-200"
-          :aria-label="'Rate ' + star + ' stars'"
-        >
-          <StarIcon
-            :class="[
-              star <= (hoverRating || modelValue) ? 'text-yellow-400' : 'text-gray-300',
-              'h-8 w-8'
-            ]"
-            :fill="star <= (hoverRating || modelValue) ? 'currentColor' : 'none'"
-          />
-        </button>
-      </template>
-    </div>
-  `
-}
-</script>
 
 <style>
 @keyframes float {

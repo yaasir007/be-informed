@@ -105,7 +105,7 @@ onMounted(() => {
   <!-- Navigation -->
   <Navigation />
 
-  <div class="min-h-screen">
+  <div class="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100">
     <main class="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div class="px-4 py-6 sm:px-0">
         <div class="overflow-hidden">
