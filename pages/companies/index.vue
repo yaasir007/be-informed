@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { StarIcon } from 'lucide-vue-next'
+import { StarIcon, PlusIcon } from 'lucide-vue-next'
 import Navigation from '@/pages/navigation/index.vue';
 
 const companies = ref([
@@ -110,6 +110,12 @@ const companies = ref([
     <main>
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="px-4 py-6 sm:px-0">
+          <div class="mb-3 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+            <NuxtLink to="./companies/creation" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <PlusIcon class="h-5 w-5 mr-2" />
+              Create Company
+            </NuxtLink>
+          </div>
           <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <div v-for="company in companies" :key="company.id" class="bg-white overflow-hidden shadow rounded-lg">
               <div class="px-4 py-5 sm:p-6">
