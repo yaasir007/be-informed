@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { StarIcon, ThumbsUpIcon, ChevronDownIcon, FolderOpenIcon, CheckIcon, PlusIcon } from 'lucide-vue-next'
-import Navigation from '../navigation/index.vue'
+import Navigation from '@/pages/navigation/index.vue'
 
 // Mock data
 const username = ref('John Doe')
@@ -93,7 +93,7 @@ const logout = () => {
 
 <template>
   <Navigation />
-  
+
   <div class="min-h-screen bg-gray-100 py-6">
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="mb-3 flex flex-col sm:flex-row justify-between items-start sm:items-center">

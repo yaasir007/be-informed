@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { StarIcon } from 'lucide-vue-next'
-import Navigation from '../navigation/index.vue';
+import Navigation from '@/pages/navigation/index.vue';
 
 const companies = ref([
   {

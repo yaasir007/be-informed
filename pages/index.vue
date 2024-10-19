@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { SearchIcon, StarIcon, PenIcon, BriefcaseIcon, TrendingUpIcon, ShieldIcon, ChevronDownIcon, XIcon } from 'lucide-vue-next'
-import Navigation from './navigation/index.vue'
-import Footer from './footer/index.vue'
+import Navigation from '@/pages/navigation/index.vue'
+import Footer from '@/pages/footer/index.vue'
 
 const testimonials = [
   {

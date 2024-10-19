@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { EyeIcon, EyeOffIcon, FacebookIcon, TwitterIcon, GithubIcon } from 'lucide-vue-next'
+import Logo from '@/pages/logo/index.vue'
 
 const name = ref('')
 const email = ref('')
@@ -46,7 +47,7 @@ const handleSubmit = () => {
       <div class="flex justify-between h-16">
         <div class="flex">
           <div class="flex-shrink-0 flex items-center">
-            <NuxtLink to="../" class="ml-2 text-xl font-bold text-[#4F45E4]">BeInformed</NuxtLink>
+            <Logo />
           </div>
         </div>
         <div class="hidden sm:ml-6 sm:flex sm:items-center">

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { MenuIcon, XIcon } from 'lucide-vue-next'
-import Logo from '../logo/index.vue'
+import Logo from '@/pages/logo/index.vue'
 
 const mobileMenuOpen = ref(false)
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import Navigation from '../navigation/index.vue'
+import Navigation from '@/pages/navigation/index.vue'
 
 const howItWorks = [
   "Create an account or log in to your existing profile.",
