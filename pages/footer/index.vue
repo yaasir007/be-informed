@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Logo from '@/pages/logo/index.vue'
 </script>
 
 <template>
@@ -6,16 +7,19 @@
     <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div class="col-span-2">
-          <h3 class="text-white text-lg font-semibold mb-4">About BeInformed</h3>
+          <div class="flex">
+            <h3 class="text-white text-lg font-semibold mb-4">About</h3>
+            <Logo />
+          </div>
           <p class="text-gray-300">We're on a mission to bring transparency to the workplace and help professionals make informed career decisions.</p>
         </div>
         <div>
           <h3 class="text-white text-lg font-semibold mb-4">Quick Links</h3>
           <ul class="space-y-2">
-            <li><a href="#" class="text-gray-300 hover:text-white">Home</a></li>
-            <li><a href="#" class="text-gray-300 hover:text-white">Companies</a></li>
-            <li><a href="#" class="text-gray-300 hover:text-white">Reviews</a></li>
-            <li><a href="#" class="text-gray-300 hover:text-white">About Us</a></li>
+            <li><NuxtLink to="../" class="text-gray-300 hover:text-white">Home</NuxtLink></li>
+            <li><NuxtLink to="../companies" class="text-gray-300 hover:text-white">Companies</NuxtLink></li>
+            <li><NuxtLink to="../reviews" class="text-gray-300 hover:text-white">Reviews</NuxtLink></li>
+            <li><NuxtLink to="../about" class="text-gray-300 hover:text-white">About</NuxtLink></li>
           </ul>
         </div>
         <div>

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
-import { SendIcon, StarIcon, ChevronDownIcon, CheckIcon } from 'lucide-vue-next'
+import { SendIcon, StarIcon, ChevronDownIcon, CheckIcon, Star } from 'lucide-vue-next'
 import Navigation from '@/pages/navigation/index.vue'
 
 const companies = ['TechCorp', 'FinanceInc', 'RetailGiant', 'HealthCare Co.']
@@ -16,10 +16,24 @@ const review = ref({
   title: '',
   reviewText: '',
   rating: 0,
-  pros: '',
-  cons: '',
   date: new Date().toISOString().split('T')[0]
 })
+
+
+const rating = ref(0)
+const hoverRating = ref(0)
+
+const setRating = (value) => {
+  rating.value = value
+}
+
+const setHoverRating = (value) => {
+  hoverRating.value = value
+}
+
+const clearHoverRating = () => {
+  hoverRating.value = 0
+}
 
 watch(isAnonymous, (newValue) => {
   if (newValue) {
@@ -76,8 +90,6 @@ const submitReview = () => {
     title: '',
     reviewText: '',
     rating: 0,
-    pros: '',
-    cons: '',
     date: new Date().toISOString().split('T')[0]
   }
   selectedCompany.value = ''
@@ -85,67 +97,12 @@ const submitReview = () => {
   showNewCompanyInput.value = false
   isAnonymous.value = false
 }
-
-const StarRating = {
-  props: {
-    modelValue: {
-      type: Number,
-      default: 0
-    }
-  },
-  emits: ['update:modelValue'],
-  setup(props, { emit }) {
-    const hoverRating = ref(0)
-
-    const updateRating = (rating) => {
-      emit('update:modelValue', rating)
-    }
-
-    return { hoverRating, updateRating }
-  },
-  template: `
-    <div class="flex items-center space-x-1">
-      <template v-for="star in 5" :key="star">
-        <button
-          @click="updateRating(star)"
-          @mouseenter="hoverRating = star"
-          @mouseleave="hoverRating = 0"
-          class="focus:outline-none transition-colors duration-200"
-          :aria-label="'Rate ' + star + ' stars'"
-        >
-          <StarIcon
-            :class="[
-              star <= (hoverRating || modelValue) ? 'text-yellow-400' : 'text-gray-300',
-              'h-8 w-8'
-            ]"
-            :fill="star <= (hoverRating || modelValue) ? 'currentColor' : 'none'"
-          />
-        </button>
-      </template>
-    </div>
-  `
-}
 </script>
 
 <template>
   <Navigation />
 
   <div class="min-h-screen flex flex-col bg-gray-100 relative overflow-hidden">
-    <!-- Animated Background -->
-    <!-- <div class="absolute inset-0 z-0">
-      <div v-for="i in 10" :key="i"
-        class="absolute rounded-full opacity-10 animate-float"
-        :style="{
-          width: `${Math.random() * 300 + 50}px`,
-          height: `${Math.random() * 300 + 50}px`,
-          left: `${Math.random() * 100}%`,
-          top: `${Math.random() * 100}%`,
-          animationDelay: `${Math.random() * 3}s`,
-          backgroundColor: ['#4F46E5', '#818CF8', '#6366F1'][Math.floor(Math.random() * 3)]
-        }"
-      ></div>
-    </div> -->
-
     <!-- Main Content -->
     <main class="flex-grow relative z-10 bg-gradient-to-br from-indigo-50 to-blue-100">
       <div class="max-w-3xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
@@ -309,30 +266,25 @@ const StarRating = {
             <!-- Star Rating -->
             <div class="space-y-2">
               <label for="star-rating" class="block text-sm font-medium text-gray-700">Your Rating</label>
-              <StarRating v-model="review.rating" id="star-rating" />
-            </div>
-
-            <!-- Pros and Cons -->
-            <div class="space-y-4">
-              <div class="space-y-2">
-                <label for="pros" class="block text-sm font-medium text-gray-700">Pros</label>
-                <textarea
-                  id="pros"
-                  v-model="review.pros"
-                  rows="3"
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  placeholder="What did you like about this company?"
-                ></textarea>
-              </div>
-              <div class="space-y-2">
-                <label for="cons" class="block text-sm font-medium text-gray-700">Cons</label>
-                <textarea
-                  id="cons"
-                  v-model="review.cons"
-                  rows="3"
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  placeholder="What could be improved?"
-                ></textarea>
+              <div class="flex items-center space-x-2">
+                <template v-for="star in 5" :key="star">
+                  <button
+                    @click="setRating(star)"
+                    @mouseenter="setHoverRating(star)"
+                    @mouseleave="clearHoverRating"
+                    class="transition-transform duration-200 ease-in-out transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded-full"
+                    :aria-label="`Rate ${star} stars`"
+                  >
+                    <Star
+                      :class="[
+                        'w-5 h-5 sm:w-8 sm:h-8',
+                        (hoverRating || rating) >= star
+                          ? 'text-yellow-400 fill-current'
+                          : 'text-gray-300'
+                      ]"
+                    />
+                  </button>
+                </template>
               </div>
             </div>
 
@@ -354,19 +306,12 @@ const StarRating = {
 </template>
 
 <style>
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-40px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }
 
-.animate-float {
-  animation: float 5s ease-in-out infinite;
+button:focus Star {
+  animation: pulse 0.5s ease-in-out;
 }
 </style>

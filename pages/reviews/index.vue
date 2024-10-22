@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { StarIcon, ThumbsUpIcon, ChevronDownIcon, FolderOpenIcon, CheckIcon, PlusIcon } from 'lucide-vue-next'
 import Navigation from '@/pages/navigation/index.vue'
+import Footer from '@/pages/footer/index.vue'
 
 // Mock data
 const username = ref('John Doe')
@@ -251,6 +252,7 @@ const logout = () => {
       </Transition>
     </main>
   </div>
+  <Footer />
 </template>
 
 <style scoped>

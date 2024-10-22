@@ -1,338 +1,192 @@
-<script setup lang="ts">
-import { ref, onMounted } from "vue";
+<script setup>
+import { ref, onMounted } from 'vue'
+import { Lightbulb, Users, Shield } from 'lucide-vue-next'
 import Navigation from '@/pages/navigation/index.vue'
-
-const howItWorks = [
-  "Create an account or log in to your existing profile.",
-  "Search for a company or browse our extensive database.",
-  "Read reviews from current and former employees.",
-  "Share your own experience by writing a review.",
-  "Rate companies based on various factors like work-life balance, culture, and career growth.",
-  "Engage with the community by voting on helpful reviews.",
-];
-
-const companyValues = ref([
-  {
-    title: "Transparency",
-    description:
-      "We believe in open and honest communication, both on our platform and within our organization.",
-    highlighted: false,
-  },
-  {
-    title: "Empowerment",
-    description:
-      "We aim to give individuals the tools and information they need to make informed career decisions.",
-    highlighted: false,
-  },
-  {
-    title: "Innovation",
-    description:
-      "We constantly strive to improve our platform and bring new ideas to the job market.",
-    highlighted: false,
-  },
-  {
-    title: "Integrity",
-    description:
-      "We maintain high ethical standards and ensure the authenticity of the reviews on our platform.",
-    highlighted: false,
-  },
-]);
-
-const highlightValue = (index: number) => {
-  companyValues.value[index].highlighted = true;
-};
-
-const unhighlightValue = (index: number) => {
-  companyValues.value[index].highlighted = false;
-};
+import Footer from '@/pages/footer/index.vue'
+import TeamPhoto from '@/assets/images/team_photo.jpg'
 
 const teamMembers = [
-  {
-    name: "Yaasir Cheekoory",
-    role: "CEO & Co-founder",
-    avatar: "/placeholder.svg?height=200&width=200",
-  },
-  {
-    name: "Yaasir Cheekoory",
-    role: "CTO",
-    avatar: "/placeholder.svg?height=200&width=200",
-  },
-  {
-    name: "Yaasir Cheekoory",
-    role: "Head of User Experience",
-    avatar: "/placeholder.svg?height=200&width=200",
-  },
-];
+  { id: 1, name: 'Jane Doe', position: 'CEO', bio: 'Visionary leader with 15+ years of industry experience.', image: '/placeholder.svg?height=400&width=300' },
+  { id: 2, name: 'John Smith', position: 'CTO', bio: 'Tech guru passionate about cutting-edge innovations.', image: '/placeholder.svg?height=400&width=300' },
+  { id: 3, name: 'Emily Brown', position: 'COO', bio: 'Operations expert ensuring smooth company processes.', image: '/placeholder.svg?height=400&width=300' },
+]
 
-const privacyCommitments = [
-  "All reviews are posted anonymously by default.",
-  "We use advanced encryption to protect your data.",
-  "We never share personal information with the companies being reviewed.",
-  "Users have full control over their account information and can delete their data at any time.",
-];
+const companyValues = [
+  { id: 1, title: 'Innovation', description: 'We constantly push boundaries to create groundbreaking solutions.', icon: Lightbulb },
+  { id: 2, title: 'Collaboration', description: 'We believe in the power of teamwork and diverse perspectives.', icon: Users },
+  { id: 3, title: 'Integrity', description: 'We uphold the highest ethical standards in all our actions.', icon: Shield },
+]
 
-const contactForm = ref({
-  name: "",
-  email: "",
-  message: "",
-});
+const form = ref({
+  name: '',
+  email: '',
+  message: ''
+})
 
-const submitContactForm = () => {
-  console.log("Form submitted:", contactForm.value);
-  contactForm.value = { name: "", email: "", message: "" };
-  alert("Thank you for your message. We will get back to you soon!");
-};
+const submitForm = () => {
+  // Here you would typically send the form data to a server
+  console.log('Form submitted:', form.value)
+  // Reset form after submission
+  form.value = { name: '', email: '', message: '' }
+  alert('Thank you for your message. We will get back to you soon!')
+}
+
+// Background animation
+const particles = ref([])
+
+const createParticles = () => {
+  for (let i = 0; i < 50; i++) {
+    particles.value.push({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 10 + 5,
+      duration: Math.random() * 20 + 10
+    })
+  }
+}
 
 onMounted(() => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("fade-in-element");
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
-
-  document.querySelectorAll("section").forEach((section) => {
-    observer.observe(section);
-  });
-});
+  createParticles()
+})
 </script>
 
 <template>
-  <!-- Navigation -->
   <Navigation />
+  <div class="min-h-screen bg-gray-50 relative overflow-hidden">
+    <!-- Animated background -->
+    <div class="absolute inset-0 overflow-hidden">
+      <div v-for="particle in particles" :key="particle.id"
+        class="absolute rounded-full bg-blue-500 opacity-20"
+        :style="{
+          width: `${particle.size}px`,
+          height: `${particle.size}px`,
+          left: `${particle.x}%`,
+          top: `${particle.y}%`,
+          animation: `float ${particle.duration}s infinite ease-in-out`
+        }">
+      </div>
+    </div>
 
-  <div class="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100">
-    <main class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-      <div class="px-4 py-6 sm:px-0">
-        <div class="overflow-hidden">
-          <div class="p-6">
-            <section class="mb-12 fade-in-element">
-              <h2 class="text-2xl font-semibold text-indigo-900 mb-4">
-                Our Mission
-              </h2>
-              <p class="text-gray-700 mb-4 leading-relaxed">
-                At CompanyInsider, our mission is to empower job seekers and
-                employees by providing a platform for honest, transparent
-                company reviews. We believe that by fostering an environment of
-                open communication, we can help create better workplaces and
-                assist individuals in making informed career decisions.
-              </p>
-              <p class="text-gray-700 leading-relaxed">
-                Our goal is to bridge the information gap between companies and
-                potential employees, ensuring that everyone has access to real
-                insights about company culture, work environment, and growth
-                opportunities.
-              </p>
-            </section>
+    <!-- Hero Section with animated gradient -->
+    <section class="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-700 animate-gradient"></div>
+      <div class="container mx-auto px-4 py-20 text-center relative z-10">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">About Our Company</h1>
+        <p class="text-xl md:text-2xl max-w-3xl mx-auto">
+          We're on a mission to revolutionize the industry with innovative solutions and exceptional service.
+        </p>
+      </div>
+    </section>
 
-            <section class="mb-12 fade-in-element">
-              <h2 class="text-2xl font-semibold text-indigo-900 mb-4">
-                How It Works
-              </h2>
-              <ol class="list-decimal list-inside text-gray-700 space-y-2">
-                <li
-                  v-for="(step, index) in howItWorks"
-                  :key="index"
-                  class="p-2 rounded transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-indigo-100"
-                >
-                  {{ step }}
-                </li>
-              </ol>
-            </section>
+    <!-- Our Story Section -->
+    <section class="py-20 relative z-10">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">Our Story</h2>
+        <div class="max-w-3xl mx-auto">
+          <p class="text-lg mb-4">
+            Founded in 2010, our company began with a simple idea: to make technology accessible to everyone.
+            What started as a small team working out of a garage has grown into a global organization with
+            offices in 15 countries.
+          </p>
+          <p class="text-lg">
+            Through the years, we've remained committed to our core values of innovation, integrity, and
+            customer-centricity. These principles have guided us through challenges and successes alike,
+            shaping us into the company we are today.
+          </p>
+        </div>
+      </div>
+    </section>
 
-            <section class="mb-12 fade-in-element">
-              <h2 class="text-2xl font-semibold text-indigo-900 mb-4">
-                Our Values
-              </h2>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div
-                  v-for="(value, index) in companyValues"
-                  :key="index"
-                  class="bg-gray-50 p-4 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
-                  @mouseenter="highlightValue(index)"
-                  @mouseleave="unhighlightValue(index)"
-                >
-                  <h3 class="text-lg font-medium text-indigo-900 mb-2">
-                    {{ value.title }}
-                  </h3>
-                  <p
-                    class="text-gray-700"
-                    :class="{ 'font-bold': value.highlighted }"
-                  >
-                    {{ value.description }}
-                  </p>
-                </div>
-              </div>
-            </section>
+    <!-- Our Mission Section -->
+    <section class="bg-white bg-opacity-80 py-20 relative z-10">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">Our Mission</h2>
+        <div class="max-w-3xl mx-auto text-center">
+          <p class="text-xl italic">
+            "To empower businesses and individuals with cutting-edge technology solutions that drive growth,
+            efficiency, and positive change in the world."
+          </p>
+        </div>
+      </div>
+    </section>
 
-            <section class="mb-12 fade-in-element">
-              <h2 class="text-2xl font-semibold text-indigo-900 mb-4">
-                Our Team
-              </h2>
-              <p class="text-gray-700 mb-4 leading-relaxed">
-                CompanyInsider was founded by a diverse group of professionals
-                who recognized the need for greater transparency in the job
-                market. Our team consists of experienced developers, data
-                scientists, and industry experts who are passionate about
-                creating a platform that makes a difference in people's careers.
-              </p>
-              <div
-                class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-8"
-              >
-                <div
-                  v-for="member in teamMembers"
-                  :key="member.name"
-                  class="bg-white shadow-md rounded-lg overflow-hidden transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl"
-                >
-                  <img
-                    src="../../assets/images/team_photo.jpg"
-                    :alt="member.name"
-                    class="w-full h-48 object-cover"
-                  />
-                  <div class="p-4">
-                    <h3 class="text-lg font-medium text-indigo-900">
-                      {{ member.name }}
-                    </h3>
-                    <p class="text-sm text-gray-600">{{ member.role }}</p>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section class="mb-12 fade-in-element">
-              <h2 class="text-2xl font-semibold text-indigo-900 mb-4">
-                Our Commitment to Privacy
-              </h2>
-              <p class="text-gray-700 mb-4 leading-relaxed">
-                We understand the sensitive nature of workplace reviews and take
-                your privacy seriously. CompanyInsider is committed to
-                protecting the anonymity of our users and ensuring that your
-                personal information remains confidential.
-              </p>
-              <ul class="list-disc list-inside text-gray-700 space-y-2">
-                <li
-                  v-for="(commitment, index) in privacyCommitments"
-                  :key="index"
-                  class="p-2 rounded transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-indigo-100"
-                >
-                  {{ commitment }}
-                </li>
-              </ul>
-            </section>
-
-            <section class="mb-12 fade-in-element">
-              <h2 class="text-2xl font-semibold text-indigo-900 mb-4">
-                Join Our Community
-              </h2>
-              <p class="text-gray-700 mb-4 leading-relaxed">
-                Become a part of the CompanyInsider community today and help
-                shape the future of work. Whether you're looking for your next
-                career move or want to share your experiences to help others,
-                your voice matters.
-              </p>
-              <div class="mt-6">
-                <a
-                  href="#"
-                  class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 ease-in-out transform hover:scale-105"
-                >
-                  Sign Up Now
-                </a>
-              </div>
-            </section>
-
-            <section class="fade-in-element">
-              <h2 class="text-2xl font-semibold text-indigo-900 mb-4">
-                Contact Us
-              </h2>
-              <p class="text-gray-700 mb-4 leading-relaxed">
-                Have questions, suggestions, or feedback? We'd love to hear from
-                you! Reach out to our support team at support@companyinsider.com
-                or use the contact form below.
-              </p>
-              <form
-                @submit.prevent="submitContactForm"
-                class="grid grid-cols-1 gap-6"
-              >
-                <div>
-                  <label
-                    for="name"
-                    class="block text-sm font-medium text-gray-700"
-                    >Name</label
-                  >
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    v-model="contactForm.name"
-                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-white text-gray-900"
-                  />
-                </div>
-                <div>
-                  <label
-                    for="email"
-                    class="block text-sm font-medium text-gray-700"
-                    >Email</label
-                  >
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    v-model="contactForm.email"
-                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-white text-gray-900"
-                  />
-                </div>
-                <div>
-                  <label
-                    for="message"
-                    class="block text-sm font-medium text-gray-700"
-                    >Message</label
-                  >
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows="4"
-                    v-model="contactForm.message"
-                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-white text-gray-900"
-                  ></textarea>
-                </div>
-                <div>
-                  <button
-                    type="submit"
-                    class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 ease-in-out transform hover:scale-105"
-                  >
-                    Send Message
-                  </button>
-                </div>
-              </form>
-            </section>
+    <!-- Team Section -->
+    <section class="py-20 relative z-10">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Meet Our Team</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div v-for="member in teamMembers" :key="member.id" class="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105">
+            <img :src="TeamPhoto" :alt="member.name" class="w-full h-64 object-cover object-center">
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">{{ member.name }}</h3>
+              <p class="text-gray-600 mb-4">{{ member.position }}</p>
+              <p class="text-gray-700">{{ member.bio }}</p>
+            </div>
           </div>
         </div>
       </div>
-    </main>
+    </section>
+
+    <!-- Values Section -->
+    <section class="bg-white bg-opacity-80 py-20 relative z-10">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Our Values</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div v-for="value in companyValues" :key="value.id" class="bg-white rounded-lg shadow-md p-6 transition-transform duration-300 ease-in-out transform hover:scale-105">
+            <component :is="value.icon" class="w-12 h-12 text-blue-600 mb-4" />
+            <h3 class="text-xl font-semibold mb-2">{{ value.title }}</h3>
+            <p class="text-gray-700">{{ value.description }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-20 relative z-10">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">Get in Touch</h2>
+        <div class="max-w-lg mx-auto bg-white bg-opacity-90 rounded-lg shadow-md p-8">
+          <form @submit.prevent="submitForm" class="space-y-6">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+              <input type="text" id="name" v-model="form.name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+              <input type="email" id="email" v-model="form.email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+            </div>
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+              <textarea id="message" v-model="form.message" rows="4" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"></textarea>
+            </div>
+            <div>
+              <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out">
+                Send Message
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
   </div>
+  <Footer />
 </template>
 
-<style>
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+<style scoped>
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
 }
 
-.fade-in-element {
-  animation: fadeIn 1s ease-out forwards;
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-section {
-  opacity: 0;
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
 }
 </style>

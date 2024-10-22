@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { StarIcon, PlusIcon } from 'lucide-vue-next'
 import Navigation from '@/pages/navigation/index.vue';
+import Footer from '@/pages/footer/index.vue'
 
 const companies = ref([
   {
@@ -144,4 +145,6 @@ const companies = ref([
       </div>
     </main>
   </div>
+
+  <Footer />
 </template>
