@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { EyeIcon, EyeOffIcon, MenuIcon, XIcon, FacebookIcon, GithubIcon, TwitterIcon } from 'lucide-vue-next'
 import Logo from '@/pages/logo/index.vue'
+import Footer from '@/pages/footer/index.vue'
 
 const email = ref('')
 const password = ref('')
@@ -162,6 +163,8 @@ const handleSubmit = () => {
       </div>
     </div>
   </div>
+
+  <Footer />
 </template>
 
 <style scoped>

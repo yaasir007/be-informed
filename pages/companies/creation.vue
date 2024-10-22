@@ -37,6 +37,7 @@ const submitForm = () => {
 
 <template>
   <Navigation />
+
   <div class="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-3xl mx-auto">
       <div class="bg-white shadow-lg rounded-lg overflow-hidden">
@@ -46,18 +47,25 @@ const submitForm = () => {
             <div class="relative pt-1">
               <div class="flex mb-2 items-center justify-between">
                 <div>
-                  <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-indigo-600 bg-indigo-200">
+                  <span v-if="formProgress !== 100" class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-indigo-600 bg-indigo-200">
+                    Progress
+                  </span>
+                  <span v-else class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-green-600 bg-green-200">
                     Progress
                   </span>
                 </div>
                 <div class="text-right">
-                  <span class="text-xs font-semibold inline-block text-indigo-600">
+                  <span v-if="formProgress !== 100" class="text-xs font-semibold inline-block text-indigo-600">
+                    {{ formProgress }}%
+                  </span>
+                  <span v-else class="text-xs font-semibold inline-block text-green-600">
                     {{ formProgress }}%
                   </span>
                 </div>
               </div>
-              <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-indigo-200">
-                <div :style="{ width: `${formProgress}%` }" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-indigo-500 transition-all duration-300 ease-in-out"></div>
+              <div class="overflow-hidden h-1 mb-4 text-xs flex rounded bg-indigo-200">
+                <div v-if="formProgress !== 100" :style="{ width: `${formProgress}%` }" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-indigo-500 transition-all duration-300 ease-in-out"></div>
+                <div v-else :style="{ width: `${formProgress}%` }" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500 transition-all duration-300 ease-in-out"></div>
               </div>
             </div>
           </div>
