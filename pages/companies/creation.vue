@@ -55,17 +55,13 @@ const submitForm = () => {
                   </span>
                 </div>
                 <div class="text-right">
-                  <span v-if="formProgress !== 100" class="text-xs font-semibold inline-block text-indigo-600">
-                    {{ formProgress }}%
-                  </span>
-                  <span v-else class="text-xs font-semibold inline-block text-green-600">
+                  <span class="text-xs font-semibold inline-block" :class="formProgress !== 100 ? 'text-indigo-600' : 'text-green-600'">
                     {{ formProgress }}%
                   </span>
                 </div>
               </div>
               <div class="overflow-hidden h-1 mb-4 text-xs flex rounded bg-indigo-200">
-                <div v-if="formProgress !== 100" :style="{ width: `${formProgress}%` }" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-indigo-500 transition-all duration-300 ease-in-out"></div>
-                <div v-else :style="{ width: `${formProgress}%` }" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500 transition-all duration-300 ease-in-out"></div>
+                <div :style="{ width: `${formProgress}%` }" :class="formProgress !== 100 ? 'shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-indigo-500 transition-all duration-300 ease-in-out' : 'shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500 transition-all duration-300 ease-in-out'"></div>
               </div>
             </div>
           </div>
