@@ -20,7 +20,7 @@ const togglePasswordVisibility = () => {
 
 const handleSubmit = () => {
   // Here you would typically send the login credentials to your backend
-  console.log('Login attempt:', { email: email.value, password: password.value, rememberMe: rememberMe.value })
+  // console.log('Login attempt:', { email: email.value, password: password.value, rememberMe: rememberMe.value })
   // You would then handle the response, perhaps setting auth tokens, redirecting, etc.
 }
 </script>

@@ -89,7 +89,7 @@ const toggleFAQ = (index: number) => {
           </p>
           <div class="mt-8 sm:flex sm:justify-center lg:justify-start">
             <div class="rounded-md shadow">
-              <NuxtLink to="./auth/login" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 md:py-4 md:text-lg md:px-10">
+              <NuxtLink to="./auth/signin" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 md:py-4 md:text-lg md:px-10">
                 Get Started
               </NuxtLink>
             </div>

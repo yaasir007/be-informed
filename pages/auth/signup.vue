@@ -52,7 +52,7 @@ const handleSubmit = () => {
           </div>
         </div>
         <div class="hidden sm:ml-6 sm:flex sm:items-center">
-          <NuxtLink to="../auth/login" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <NuxtLink to="/" class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Sign in
           </NuxtLink>
         </div>
@@ -86,7 +86,7 @@ const handleSubmit = () => {
       </h2>
       <p class="mt-2 text-center text-sm text-gray-600">
         Or
-        <NuxtLink to="./login" class="font-medium text-indigo-600 hover:text-indigo-500">
+        <NuxtLink to="./signin" class="font-medium text-indigo-600 hover:text-indigo-500">
           sign in to your existing account
         </NuxtLink>
       </p>
